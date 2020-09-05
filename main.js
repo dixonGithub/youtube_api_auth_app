@@ -1,5 +1,5 @@
 // Options
-const CLIENT_ID = 'YOUR_CLIENT_ID';
+const CLIENT_ID = '639956940266-01r3fcbb4p16pc6250g5d08j795onr4n.apps.googleusercontent.com';
 const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
 ];
@@ -12,7 +12,7 @@ const channelForm = document.getElementById('channel-form');
 const channelInput = document.getElementById('channel-input');
 const videoContainer = document.getElementById('video-container');
 
-const defaultChannel = 'techguyweb';
+const defaultChannel = 'abcdef';
 
 // Form submit and change channel
 channelForm.addEventListener('submit', e => {

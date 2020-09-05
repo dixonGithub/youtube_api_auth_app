@@ -46,9 +46,84 @@
           <div id="channel-data" class="col s6"></div>
         </div>
         <div class="row" id="video-container"></div>
+        <div class="row2" id="videocontainer"><h1>hello world</h1></div>
       </div>
     </div>
   </section>
+
+
+
+
+
+
+  <script>
+    const videocontainer = document.getElementById('videocontainer');
+      
+  function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+  }
+  function loadClient() {
+    gapi.client.setApiKey("AIzaSyBhTqbqqFcuNT_NFIL9_tsQBQgTNewOcgw");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+
+      // Make sure the client is loaded and sign-in is complete before calling this method.
+  function execute() {
+    return gapi.client.youtube.videos.list({
+      "part": [
+        "snippet,contentDetails,statistics"
+      ],
+      "myRating": "like"
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+                const likedVideos = response.result.items;
+    if (likedVideos) {
+      let output = '<br><h4 class="center-align">Liked Videos</h4>';
+
+      // Loop through videos and append output
+      var count = 0;
+      likedVideos.forEach(item => {
+        if (!(count < 5))
+          throw exception;  
+        else count++;
+ 
+        const videoId = item.id;
+
+        // <div class="col s3">
+        //   <iframe width="100%" height="auto" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        //   </div>
+        output += `
+          <div class="col s3">
+            <h1>Test</h1>
+          </div>
+        `;
+      });
+
+      // Output videos
+      videocontainer.innerHTML = output;
+    } else {
+      videocontainer.innerHTML = 'No Liked Videos';
+    }
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "639956940266-01r3fcbb4p16pc6250g5d08j795onr4n.apps.googleusercontent.com"});
+  });
+  </script>
+  <button onclick="authenticate().then(loadClient)">authorize and load</button>
+  <button onclick="execute()">execute</button>
+
+
+
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
   <script src="main.js"></script>
